@@ -275,7 +275,9 @@ export const sectionSettingData = {
   sections: {
     header: {
       type: 'header',
-      settings: {}
+      settings: {
+        logo: 'asdf'
+      }
     },
     footer: {
       type: 'footer',
@@ -287,11 +289,15 @@ export const sectionSettingData = {
     },
     bannerImage: {
       type: 'banner_image',
-      settings: {}
+      settings: {
+        image: 'https://images.asia.finance/contents/images/20180312100451/shutterstock_89116057.jpg'
+      }
     },
     bannerImage_1: {
       type: 'banner_image',
-      settings: {}
+      settings: {
+        image: 'https://images.asia.finance/contents/images/20180312100451/shutterstock_89116057.jpg'
+      }
     },
     testimonial: {
       type: 'testimonial',

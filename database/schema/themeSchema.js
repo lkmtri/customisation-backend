@@ -2,7 +2,7 @@
 import mongoose, { Schema } from 'mongoose'
 
 const themeSettingSchema = new Schema({
-  type: String,
+  name: String,
   settings: [Schema.Types.Mixed]
 })
 

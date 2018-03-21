@@ -28,8 +28,8 @@ const getThemePreviewToken = async ({ merchantId }) => {
   return temp.previewToken
 }
 
-const getPreviewThemeData = async ({ merchantId, previewToken }) => {
-  const themeData = await Temp.findOne({ merchantId, previewToken })
+const getPreviewThemeData = async ({ previewToken }) => {
+  const themeData = await Temp.findOne({ previewToken })
   const themeSchema = await Theme.findOne({ _id: themeData.themeId })
   return {
     themeData,
@@ -37,9 +37,9 @@ const getPreviewThemeData = async ({ merchantId, previewToken }) => {
   }
 }
 
-const savePreviewThemeData = async ({ merchantId, previewToken, themeSettings, sectionSettings }) => {
+const savePreviewThemeData = async ({ previewToken, themeSettings, sectionSettings }) => {
   const themeData = await Temp.findOneAndUpdate(
-    { merchantId, previewToken },
+    { previewToken },
     { themeSettings, sectionSettings }
   )
   return themeData

@@ -1,10 +1,13 @@
 import express from 'express'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import db from 'database'
 
 const PORT = 3002
 
 const app = express()
+
+app.use(cors())
 
 app.use(bodyParser.json())
 
@@ -26,22 +29,22 @@ app.post('/theme', async function (req, res) {
 
 // To get preview theme settings
 app.get('/theme-preview', async function (req, res) {
-  const { merchantId, previewToken } = req.query
-  const theme = await db.query.getPreviewThemeData({ merchantId, previewToken })
+  const { previewToken } = req.query
+  const theme = await db.query.getPreviewThemeData({ previewToken })
   if (!theme) return res.sendStatus(400)
   return res.status(200).json(theme)
 })
 
 // To save changes to preview theme settings
 app.post('/theme-preview', async function (req, res) {
-  const { merchantId, previewToken, themeSettings, sectionSettings } = req.body
-  const theme = await db.query.savePreviewThemeData({ merchantId, previewToken, themeSettings, sectionSettings })
+  const { previewToken, themeSettings, sectionSettings } = req.body
+  const theme = await db.query.savePreviewThemeData({ previewToken, themeSettings, sectionSettings })
   if (!theme) return res.sendStatus(400)
   return res.sendStatus(200).json(theme)
 })
 
 // To get preview token
-app.get('/theme-preview-token', async function (req, res) {
+app.get('/preview-token', async function (req, res) {
   const { merchantId } = req.query
   const previewToken = merchantId && await db.query.getThemePreviewToken({ merchantId })
   if (!previewToken) return res.sendStatus(400)
