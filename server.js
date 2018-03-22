@@ -12,7 +12,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 // To get current settings for theme
-app.get('/theme', async function (req, res) {
+app.get('/api/theme', async function (req, res) {
   const { merchantId } = req.query
   const theme = await db.query.getTheme({ merchantId })
   if (!theme) return res.sendStatus(400)
@@ -20,7 +20,7 @@ app.get('/theme', async function (req, res) {
 })
 
 // To publish changes in theme settings
-app.post('/theme', async function (req, res) {
+app.post('/api/theme', async function (req, res) {
   const { merchantId, previewToken } = req.body
   const theme = await db.query.saveThemeData({ merchantId, previewToken })
   if (!theme) return res.sendStatus(400)
@@ -28,7 +28,7 @@ app.post('/theme', async function (req, res) {
 })
 
 // To get preview theme settings
-app.get('/theme-preview', async function (req, res) {
+app.get('/api/theme-preview', async function (req, res) {
   const { previewToken } = req.query
   const theme = await db.query.getPreviewThemeData({ previewToken })
   if (!theme) return res.sendStatus(400)
@@ -36,7 +36,7 @@ app.get('/theme-preview', async function (req, res) {
 })
 
 // To save changes to preview theme settings
-app.post('/theme-preview', async function (req, res) {
+app.post('/api/theme-preview', async function (req, res) {
   const { previewToken, themeSettings, sectionSettings } = req.body
   const theme = await db.query.savePreviewThemeData({ previewToken, themeSettings, sectionSettings })
   if (!theme) return res.sendStatus(400)
@@ -44,7 +44,7 @@ app.post('/theme-preview', async function (req, res) {
 })
 
 // To get preview token
-app.get('/preview-token', async function (req, res) {
+app.get('/api/preview-token', async function (req, res) {
   const { merchantId } = req.query
   const previewToken = merchantId && await db.query.getThemePreviewToken({ merchantId })
   if (!previewToken) return res.sendStatus(400)
