@@ -145,7 +145,8 @@ export const sectionSettingSchema = [
       {
         type: 'text',
         id: 'image',
-        label: 'Upload an image'
+        label: 'Upload an image',
+        default: 'https://images.pexels.com/photos/258136/pexels-photo-258136.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
       }
     ],
     presets: {}
@@ -159,7 +160,7 @@ export const sectionSettingSchema = [
         type: 'radio',
         id: 'product_list_mode',
         label: 'Choose list or grid view',
-        default: 'grid',
+        default: ['grid'],
         options: [
           { value: 'grid', label: 'Show products in grid view' },
           { value: 'list', label: 'Show products in list view' }
@@ -168,8 +169,8 @@ export const sectionSettingSchema = [
     ],
     blocks: [
       {
-        type: 'quote',
-        name: 'Testimonial',
+        type: 'product_item',
+        name: 'Product Item',
         settings: [
           {
             type: 'textarea',
@@ -187,13 +188,10 @@ export const sectionSettingSchema = [
       }
     ],
     presets: {
-      name: 'Testimonials',
-      blocks: {
-        quote_1: { type: 'quote' },
-        quote_2: { type: 'quote' },
-        quote_3: { type: 'quote' }
-      },
-      blocksOrder: ['quote_1', 'quote_2', 'quote_3']
+      name: 'Product List',
+      blocks: [
+        { type: 'product_item' }
+      ]
     }
   },
   {
