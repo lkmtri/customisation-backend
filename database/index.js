@@ -30,12 +30,12 @@ const setUpMockData = async () => {
 }
 
 const connect = (callback) => {
-  mongoose.connect('mongodb://localhost/test')
+  mongoose.connect('mongodb://mongodb/test')
   const db = mongoose.connection
   db.once('open', async function () {
     console.log('Successfully connected to mongodb')
     typeof callback === 'function' && callback()
-    // await setUpMockData()
+    await setUpMockData()
   })
 }
 
