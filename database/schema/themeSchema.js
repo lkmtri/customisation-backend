@@ -19,8 +19,14 @@ const sectionSettingSchema = new Schema({
 })
 
 const themeSchema = new Schema({
-  name: String,
-  author: String,
+  name: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: String,
+    required: true
+  },
   version: String,
   created: Date,
   apiVersion: String,

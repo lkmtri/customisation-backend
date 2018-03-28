@@ -1,11 +1,16 @@
+import http from 'http'
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import config from 'config'
 import db from 'database'
+import './socket'
 
-const PORT = 3002
+const PORT = config.port
 
 const app = express()
+
+const server = http.Server(app)
 
 app.use(cors())
 
@@ -51,8 +56,18 @@ app.get('/api/preview-token', async function (req, res) {
   return res.status(200).json(previewToken)
 })
 
+app.post('/api/theme-schema', async function (req, res) {
+  const { themeMeta, themeSettingSchema, sectionSettingSchema } = req.body
+  try {
+    const theme = await db.query.updateThemeSchema({ themeMeta, themeSettingSchema, sectionSettingSchema })
+    return res.status(201).json(theme)
+  } catch (err) {
+    return res.status(400).json({ error: err })
+  }
+})
+
 const startServer = () => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
   })
 }

@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4'
+import withClientUpdateNotification from 'socket'
 import Theme from '../schema/themeSchema'
 import ThemeData, { Temp } from '../schema/themeData'
 
@@ -54,11 +55,23 @@ const saveThemeData = async ({ merchantId, previewToken }) => {
   )
 }
 
+const _updateThemeSchema = async ({ themeMeta, themeSettingSchema, sectionSettingSchema }) => {
+  const theme = await Theme.findOneAndUpdate(
+    { name: themeMeta.name },
+    { themeSettingSchema, sectionSettingSchema }
+  )
+  console.log(theme)
+  return theme
+}
+
+const updateThemeSchema = withClientUpdateNotification('theme_schema_update', _updateThemeSchema)
+
 export {
   getThemePreviewToken,
   getPreviewThemeData,
   savePreviewThemeData,
   getTheme,
   createNewTheme,
-  saveThemeData
+  saveThemeData,
+  updateThemeSchema
 }
