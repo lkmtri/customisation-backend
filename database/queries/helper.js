@@ -25,7 +25,6 @@ const removeInvalidSectionsData = ({ pages, sections, sectionTypes }) => {
     acc[page] = removeInvalidObj({ objList: Object.keys(validSections), arr: pages[page] })
     return acc
   }, {})
-  console.log(validSections)
   return {
     sections: validSections,
     pages: validPages
@@ -38,7 +37,6 @@ export const invalidateThemeData = async (theme, themeData) => {
     acc[section.type] = section
     return acc
   }, {})
-  // console.log(sectionTypes)
   for (let data in themeData) {
     const { sectionSettings } = themeData[data]
     const { sections, pages } = sectionSettings

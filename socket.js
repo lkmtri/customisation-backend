@@ -8,7 +8,7 @@ const io = socket(SOCKET_PORT, {
 })
 
 io.on('connection', () => {
-  console.log('a new client connected')
+  console.log('A new client connected to socket')
 })
 
 export const notifySocketSubscribers = ({ message, data }) => {

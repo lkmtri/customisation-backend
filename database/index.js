@@ -25,8 +25,7 @@ const setUpMockData = async () => {
     themeSettings: themeSettingData,
     sectionSettings: sectionSettingData
   })
-  console.log(await Theme.find({}))
-  console.log(await ThemeData.find({}))
+  console.log('Set up mock data completed')
 }
 
 const connect = (callback) => {

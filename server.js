@@ -62,7 +62,6 @@ app.post('/api/theme-schema', async function (req, res) {
     const theme = await db.query.updateThemeSchema({ themeMeta, themeSettingSchema, sectionSettingSchema })
     return res.status(201).json(theme)
   } catch (err) {
-    console.log(err)
     return res.status(400).json({ error: err })
   }
 })
