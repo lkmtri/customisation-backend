@@ -2,6 +2,7 @@ import uuid from 'uuid/v4'
 import withClientUpdateNotification from 'socket'
 import Theme from '../schema/themeSchema'
 import ThemeData, { Temp } from '../schema/themeData'
+import { invalidateThemeData } from './helper'
 
 const getTheme = async ({ merchantId }) => {
   const themeData = await ThemeData.findOne({ merchantId })
@@ -58,9 +59,11 @@ const saveThemeData = async ({ merchantId, previewToken }) => {
 const _updateThemeSchema = async ({ themeMeta, themeSettingSchema, sectionSettingSchema }) => {
   const theme = await Theme.findOneAndUpdate(
     { name: themeMeta.name },
-    { themeSettingSchema, sectionSettingSchema }
-  )
-  console.log(theme)
+    { themeSettingSchema, sectionSettingSchema },
+    { new: true } // to return the updated document
+  ).exec()
+  const themeData = await ThemeData.find({ themeId: theme._id })
+  await invalidateThemeData(theme, themeData)
   return theme
 }
 

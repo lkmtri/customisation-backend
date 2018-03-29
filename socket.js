@@ -1,6 +1,9 @@
 import socket from 'socket.io'
+import config from 'config'
 
-const io = socket(3005, {
+const SOCKET_PORT = config.socketPort
+
+const io = socket(SOCKET_PORT, {
   path: '/api/subscription'
 })
 
@@ -13,4 +16,11 @@ export const notifySocketSubscribers = ({ message, data }) => {
 }
 
 export default (message, action = () => {}) =>
-  async (...param) => notifySocketSubscribers({ message, data: await action(...param) })
+  async (...param) => {
+    try {
+      const data = await action(...param)
+      notifySocketSubscribers({ message, data })
+    } catch (e) {
+      throw e
+    }
+  }

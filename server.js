@@ -6,7 +6,7 @@ import config from 'config'
 import db from 'database'
 import './socket'
 
-const PORT = config.port
+const PORT = config.serverPort
 
 const app = express()
 
@@ -62,6 +62,7 @@ app.post('/api/theme-schema', async function (req, res) {
     const theme = await db.query.updateThemeSchema({ themeMeta, themeSettingSchema, sectionSettingSchema })
     return res.status(201).json(theme)
   } catch (err) {
+    console.log(err)
     return res.status(400).json({ error: err })
   }
 })

@@ -2,7 +2,8 @@ import { default as devConfig } from './dev'
 import { default as dockerConfig } from './docker'
 
 const baseConfig = {
-  port: 3002
+  serverPort: 3002,
+  socketPort: 3005
 }
 
 let envConfig = {}
