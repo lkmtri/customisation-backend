@@ -62,9 +62,20 @@ const _updateThemeSchema = async ({ themeMeta, themeSettingSchema, sectionSettin
     { themeSettingSchema, sectionSettingSchema },
     { new: true } // to return the updated document
   ).exec()
-  const themeData = await ThemeData.find({ themeId: theme._id })
+  const themeData = await ThemeData.findOne({ themeId: theme._id }).exec()
+  const previewThemeData = await Temp.findOne({ themeId: theme._id }).exec()
   await invalidateThemeData(theme, themeData)
-  return theme
+  previewThemeData && await invalidateThemeData(theme, previewThemeData)
+  const validThemeData = await ThemeData.findOne({ themeId: theme._id }).exec()
+  const validaPreviewThemeData = await Temp.findOne({ themeId: theme._id }).exec()
+  return {
+    themeSettingSchema: theme.themeSettingSchema,
+    sectionSettingSchema: theme.sectionSettingSchema,
+    themeSettings: validThemeData.themeSettings,
+    sectionSettings: validThemeData.sectionSettings,
+    previewThemeSettings: validaPreviewThemeData && validaPreviewThemeData.themeSettings,
+    previewSectionSettings: validaPreviewThemeData && validaPreviewThemeData.sectionSettings
+  }
 }
 
 const updateThemeSchema = withClientUpdateNotification('theme_schema_update', _updateThemeSchema)

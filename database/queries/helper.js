@@ -37,11 +37,9 @@ export const invalidateThemeData = async (theme, themeData) => {
     acc[section.type] = section
     return acc
   }, {})
-  for (let data in themeData) {
-    const { sectionSettings } = themeData[data]
-    const { sections, pages } = sectionSettings
-    await themeData[data].update({
-      sectionSettings: removeInvalidSectionsData({ pages, sections, sectionTypes })
-    })
-  }
+  const { sectionSettings } = themeData
+  const { sections, pages } = sectionSettings
+  return themeData.update({
+    sectionSettings: removeInvalidSectionsData({ pages, sections, sectionTypes })
+  }).exec()
 }
