@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose'
 const themeSettingSchema = new Schema({
   name: String,
   settings: [Schema.Types.Mixed]
-})
+}, { minimize: false })
 
 const sectionSettingSchema = new Schema({
   name: String,
@@ -16,7 +16,7 @@ const sectionSettingSchema = new Schema({
     category: String,
     blocks: [Schema.Types.Mixed]
   }
-})
+}, { minimize: false })
 
 const themeSchema = new Schema({
   name: {
@@ -32,7 +32,7 @@ const themeSchema = new Schema({
   apiVersion: String,
   themeSettingSchema: [themeSettingSchema],
   sectionSettingSchema: [sectionSettingSchema]
-})
+}, { minimize: false })
 
 themeSchema.static('findOneOrCreate', async function findOneOrCreate (condition, doc) {
   const one = await this.findOne(condition)

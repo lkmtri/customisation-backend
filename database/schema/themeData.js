@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose'
 const sectionSettingDataSchema = new Schema({
   sections: Schema.Types.Mixed,
   pages: Schema.Types.Mixed
-})
+}, { minimize: false })
 
 const themeDataSchema = new Schema({
   merchantId: {
@@ -15,7 +15,7 @@ const themeDataSchema = new Schema({
   themeId: { type: Schema.Types.ObjectId, ref: 'Theme' },
   themeSettings: Schema.Types.Mixed,
   sectionSettings: sectionSettingDataSchema
-})
+}, { minimize: false })
 
 const temp = new Schema({
   merchantId: {
@@ -27,7 +27,7 @@ const temp = new Schema({
   themeId: { type: Schema.Types.ObjectId, ref: 'Theme' },
   themeSettings: Schema.Types.Mixed,
   sectionSettings: sectionSettingDataSchema
-})
+}, { minimize: false })
 
 temp.static('findOneOrCreate', async function findOneOrCreate (condition, doc) {
   const one = await this.findOne(condition)
