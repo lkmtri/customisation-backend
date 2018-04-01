@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import withClientUpdateNotification from 'socket'
+import withPushUpdateToClient from 'socket'
 import Theme from '../schema/themeSchema'
 import ThemeData, { Temp } from '../schema/themeData'
 import { invalidateThemeData } from './helper'
@@ -68,6 +68,7 @@ const _updateThemeSchema = async ({ themeMeta, themeSettingSchema, sectionSettin
   previewThemeData && await invalidateThemeData(theme, previewThemeData)
   const validThemeData = await ThemeData.findOne({ themeId: theme._id }).exec()
   const validaPreviewThemeData = await Temp.findOne({ themeId: theme._id }).exec()
+  console.log(theme)
   return {
     themeSettingSchema: theme.themeSettingSchema,
     sectionSettingSchema: theme.sectionSettingSchema,
@@ -78,7 +79,7 @@ const _updateThemeSchema = async ({ themeMeta, themeSettingSchema, sectionSettin
   }
 }
 
-const updateThemeSchema = withClientUpdateNotification('theme_schema_update', _updateThemeSchema)
+const updateThemeSchema = withPushUpdateToClient('theme_schema_update', _updateThemeSchema)
 
 export {
   getThemePreviewToken,
